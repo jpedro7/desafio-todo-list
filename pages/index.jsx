@@ -49,16 +49,18 @@ export default function TodoList() {
           data-testid="newTaskTitle"
           id="new-task"
           type="text"
+          placeholder="Title"
           value={newTitleTask}
           onChange={handleNewTitleChange}
+          onKeyUp={(e) => {if (e.key.toLowerCase() === "enter") handleAddNewTask()}}
         />
         <button onClick={handleAddNewTask}>Add</button>
       </p>
       <h3>Todo</h3>
       <ul id="incomplete-tasks">
-      <input type="text" id="filter-tasks" onChange={handleTaskFilter} />
+      <input type="text" id="filter-tasks" placeholder="search" onChange={handleTaskFilter} />
         {tasks
-          .filter((task) => !task.completed && task.title.includes(taskFilter))
+          .filter((task) => !task.completed && task.title.toLowerCase().includes(taskFilter.toLowerCase()))
           .map((task) => (
             <TaskItem
               key={task.id}
